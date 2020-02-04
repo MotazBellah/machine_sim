@@ -4,8 +4,28 @@ from math import sqrt
 app = Flask(__name__)
 
 def draw_grid(map, draw, locations):
+    '''Locate the black squares in the white grid
+       the black squares would have `**` instead of black color
+       The function replace each draw which is the base of the square `__`
+       with `**` according to the location in the map
+
+       Parameters:
+       map (list): List of tuple, each tuple represent the location of the squares
+       in the grid (x, y)
+
+       draw (list): List of `__` which represent the base of the squares and its length
+       equal the length of row in the map (i.e map/2)
+
+       locations (list): List of tuple, each tuple represent the location where the machine
+       moves on it
+
+       Output:
+       string: generate a file which contains a string representation of the grid that located the
+       black squares donated by `**`
+    '''
+
     file = open("grid.txt", 'w')
-    y = ""
+    grid = ""
     for location in locations:
         if locations.count(location) % 2:
             index_player = map.index(location)
@@ -13,8 +33,8 @@ def draw_grid(map, draw, locations):
     draw_tuple = tuple(draw)
     z = int(sqrt(len(map)))
     for i in range(z):
-        y += "|{}" *z +"\n"
-    x = y.format(*draw_tuple)
+        grid += "|{}" *z +"\n"
+    x = grid.format(*draw_tuple)
     print (x)
     file.write(x)
     file.close()
