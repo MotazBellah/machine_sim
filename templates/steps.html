@@ -6,7 +6,7 @@
     </head>
     <body>
         <div class="">
-            <input id="numberField"type="number" name="name" placeholder="Please enter number of steps">
+            <input id="numberField"type="number" name="name" placeholder="number of steps">
              <input id="button" type="submit" value="Start">
         </div>
 
@@ -23,7 +23,7 @@
                 // Send ajax put request and append the value to url,
                 // So it's easy to fetch the data from url
                 // Redirect to the main page in case of success request
-                
+
                 $.ajax({
                     url: '/?steps='+steps,
                     type: 'PUT',

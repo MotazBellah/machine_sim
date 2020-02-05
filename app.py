@@ -58,7 +58,7 @@ def move_machine():
             r = 10
         else:
             set_range = int(str(1) + '0' * (len(str(steps)) -2))
-            r = (n // set_range) + (n % set_range)
+            r = (steps // set_range) + (steps % set_range)
         # Create a gird in form x, y
         MAP = [(i, j) for i in range(-r, r+1) for j in range(-r, r+1)]
         # Start from the half of the grid
