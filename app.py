@@ -20,20 +20,30 @@ def draw_grid(map, locations):
        string: generate a file which contains a string representation of the grid that located the
        black squares donated by `**`
     '''
-
+    # Create a grid text file
     file = open("grid.txt", 'w')
+    # List represent the base of each square in the grid
     draw = ["__" for i in range(len(map))]
     grid = ""
+    # loop through the locations where the machine steps on it
+    # if the number of steps is an odd number, then the square should be black
+    # get the location of the black squares `index` in the map
+    # for each one replace the base `__` with `**` that represent the black squares
     for location in locations:
         if locations.count(location) % 2:
             index_player = map.index(location)
             draw[index_player] = '**'
+    # Convert the updated draw list which contain `**` to be tuple
+    # to unpack the values in the grid string
     draw_tuple = tuple(draw)
-    z = int(sqrt(len(map)))
-    for i in range(z):
-        grid += "|{}" *z +"\n"
+    # get the map_range by getting the square root of the map
+    # grid_size = map_range * map_range
+    map_range = int(sqrt(len(map)))
+    # for each column, create a row
+    for i in range(map_range):
+        grid += "|{}" * map_range + "\n"
+
     x = grid.format(*draw_tuple)
-    # print (x)
     file.write(x)
     file.close()
 
