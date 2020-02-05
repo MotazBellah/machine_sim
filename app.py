@@ -3,7 +3,7 @@ from math import sqrt
 
 app = Flask(__name__)
 
-def draw_grid(map, draw, locations):
+def draw_grid(map, locations):
     '''Locate the black squares in the white grid
        the black squares would have `**` instead of black color
        The function replace each draw which is the base of the square `__`
@@ -12,9 +12,6 @@ def draw_grid(map, draw, locations):
        Parameters:
        map (list): List of tuple, each tuple represent the location of the squares
        in the grid (x, y)
-
-       draw (list): List of `__` which represent the base of the squares and its length
-       equal the length of row in the map (i.e map/2)
 
        locations (list): List of tuple, each tuple represent the location where the machine
        moves on it
@@ -25,6 +22,7 @@ def draw_grid(map, draw, locations):
     '''
 
     file = open("grid.txt", 'w')
+    draw = ["__" for i in range(len(map))]
     grid = ""
     for location in locations:
         if locations.count(location) % 2:
@@ -46,7 +44,6 @@ def move_machine(steps):
     r = 10 + (steps - 200) // 30
     e = 1 + (steps-200) // 30
     MAP = [(i, j) for i in range(-1*e, r) for j in range(-1*e, r)]
-    draw = ["__" for i in range(len(MAP))]
     machine_location = MAP[len(MAP) // 2]
     # print(machine_location)
     check = []
@@ -98,7 +95,7 @@ def move_machine(steps):
                 y += 1
                 direction = 'right'
     # print(check)
-    draw_grid(MAP, draw, check)
+    draw_grid(MAP, check)
 
     return 'OK'
 
