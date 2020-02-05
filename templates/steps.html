@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Machine Simulation</title>
+    </head>
+    <body>
+        <div class="">
+            <input id="numberField"type="number" name="name" placeholder="Please enter number of steps">
+             <input id="button" type="submit" value="Start">
+        </div>
+
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+            $("#button").click(function() {
+                const steps = $("#numberField").val();
+                alert(steps);
+                $.ajax({
+                    url: '/?steps='+steps,
+                    type: 'PUT',
+                    async: false,
+                    data: {},
+                    success: function(data) {
+                        window.location.href = '/'
+                    },
+                    error: function () {
+                        alert('Sorry, something went wrong :(');
+                    }
+                });
+            });
+        </script>
+
+    </body>
+</html>

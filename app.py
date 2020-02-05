@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 from math import sqrt
 
 app = Flask(__name__)
@@ -33,71 +33,80 @@ def draw_grid(map, locations):
     for i in range(z):
         grid += "|{}" *z +"\n"
     x = grid.format(*draw_tuple)
-    print (x)
+    # print (x)
     file.write(x)
     file.close()
 
 
-@app.route('/<int:steps>', methods = ['PUT'])
-def move_machine(steps):
+@app.route('/', methods = ['GET', 'PUT'])
+def move_machine():
 
-    r = 10 + (steps - 200) // 30
-    e = 1 + (steps-200) // 30
-    MAP = [(i, j) for i in range(-1*e, r) for j in range(-1*e, r)]
-    machine_location = MAP[len(MAP) // 2]
-    # print(machine_location)
-    check = []
-    x, y = machine_location
-    direction = 'right'
+    if request.method == 'PUT':
+        # steps = request.form['name']
+        print('=============drfglkjfdnblvkjlfnbkjbvlkjfnblkfjbnlknb;lkfgmhnfg=========')
+        # print(request.form['name'])
+        steps = int(request.args.get('steps'))
+        # print(step)
+        # steps = 201
+        r = 10 + (steps - 200) // 30
+        e = 1 + (steps-200) // 30
+        MAP = [(i, j) for i in range(-1*e, r) for j in range(-1*e, r)]
+        machine_location = MAP[len(MAP) // 2]
+        # print(machine_location)
+        check = []
+        x, y = machine_location
+        direction = 'right'
 
-    for i in range(steps):
+        for i in range(steps):
 
-        # if (x,y) in check:
-        if check.count((x,y)) % 2:
-            check.append((x, y))
-            if direction == 'left':
-                x += 1
-                direction = 'down'
-
-
-            elif direction == 'up':
-                y -= 1
-                direction = 'left'
-
-
-            elif direction == "right":
-                x -= 1
-                direction = 'up'
+            # if (x,y) in check:
+            if check.count((x,y)) % 2:
+                check.append((x, y))
+                if direction == 'left':
+                    x += 1
+                    direction = 'down'
 
 
-            elif direction == 'down':
-                y += 1
-                direction = 'right'
-
-        else:
-            check.append((x, y))
-            if direction == 'right':
-                x += 1
-                direction = 'down'
+                elif direction == 'up':
+                    y -= 1
+                    direction = 'left'
 
 
-            elif direction == 'down':
-                y -= 1
-                direction = 'left'
+                elif direction == "right":
+                    x -= 1
+                    direction = 'up'
 
 
-            elif direction == "left":
-                x -= 1
-                direction = 'up'
+                elif direction == 'down':
+                    y += 1
+                    direction = 'right'
+
+            else:
+                check.append((x, y))
+                if direction == 'right':
+                    x += 1
+                    direction = 'down'
 
 
-            elif direction == 'up':
-                y += 1
-                direction = 'right'
-    # print(check)
-    draw_grid(MAP, check)
+                elif direction == 'down':
+                    y -= 1
+                    direction = 'left'
 
-    return 'OK'
+
+                elif direction == "left":
+                    x -= 1
+                    direction = 'up'
+
+
+                elif direction == 'up':
+                    y += 1
+                    direction = 'right'
+        # print(check)
+        draw_grid(MAP, check)
+
+        # return redirect(url_for('move_machine'))
+        return jsonify({'result': 'success'})
+    return render_template('steps.html')
 
 
 if __name__ == '__main__':
