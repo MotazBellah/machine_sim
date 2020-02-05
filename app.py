@@ -44,10 +44,13 @@ def move_machine():
     if request.method == 'PUT':
         # Ge the value of steps from url
         steps = int(request.args.get('steps'))
-
-        r = 10 + (steps - 200) // 30
-        e = 1 + (steps-200) // 30
-        MAP = [(i, j) for i in range(-1*e, r) for j in range(-1*e, r)]
+        if steps < 100:
+            r = 10
+        else:
+            set_range = int(str(1) + '0' * (len(str(steps)) -2))
+            r = (n // set_range) + (n % set_range)
+        # Create a gird in form x, y
+        MAP = [(i, j) for i in range(-r, r+1) for j in range(-r, r+1)]
         # Start from the half of the grid
         machine_location = MAP[len(MAP) // 2]
         # list to hold all steps the machine made
