@@ -42,70 +42,69 @@ def draw_grid(map, locations):
 def move_machine():
 
     if request.method == 'PUT':
-        # steps = request.form['name']
-        print('=============drfglkjfdnblvkjlfnbkjbvlkjfnblkfjbnlknb;lkfgmhnfg=========')
-        # print(request.form['name'])
+        # Ge the value of steps from url
         steps = int(request.args.get('steps'))
-        # print(step)
-        # steps = 201
+
         r = 10 + (steps - 200) // 30
         e = 1 + (steps-200) // 30
         MAP = [(i, j) for i in range(-1*e, r) for j in range(-1*e, r)]
+        # Start from the half of the grid
         machine_location = MAP[len(MAP) // 2]
-        # print(machine_location)
+        # list to hold all steps the machine made
         check = []
+        # unpack to x, y value
         x, y = machine_location
+        # start with right direction
         direction = 'right'
 
+        # loop through the number of steps
+        # turn clockwise or counter-clockwise based on the number of (x,y) occurrence
+        # If the occurrence is odd, then grid should be black, turn counter-clockwise
+        # If the occurrence is even, then grid should be white, turn clockwise
         for i in range(steps):
-
-            # if (x,y) in check:
+            # If the occurrence is odd, then grid should be black, turn counter-clockwise
+            # right => up => left => down
             if check.count((x,y)) % 2:
                 check.append((x, y))
                 if direction == 'left':
                     x += 1
                     direction = 'down'
 
-
                 elif direction == 'up':
                     y -= 1
                     direction = 'left'
-
 
                 elif direction == "right":
                     x -= 1
                     direction = 'up'
 
-
                 elif direction == 'down':
                     y += 1
                     direction = 'right'
-
+            # If the occurrence is even, then grid should be white, turn clockwise
+            # right => down => left => up
             else:
                 check.append((x, y))
                 if direction == 'right':
                     x += 1
                     direction = 'down'
 
-
                 elif direction == 'down':
                     y -= 1
                     direction = 'left'
-
 
                 elif direction == "left":
                     x -= 1
                     direction = 'up'
 
-
                 elif direction == 'up':
                     y += 1
                     direction = 'right'
-        # print(check)
+
         draw_grid(MAP, check)
 
-        # return redirect(url_for('move_machine'))
         return jsonify({'result': 'success'})
+    # Get request render the steps html
     return render_template('steps.html')
 
 

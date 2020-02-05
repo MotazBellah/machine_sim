@@ -16,9 +16,14 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <script type="text/javascript">
+            // Once the submit button is clicked, generate the ajax request
             $("#button").click(function() {
+                // Get the value of the input field
                 const steps = $("#numberField").val();
-                alert(steps);
+                // Send ajax put request and append the value to url,
+                // So it's easy to fetch the data from url
+                // Redirect to the main page in case of success request
+                
                 $.ajax({
                     url: '/?steps='+steps,
                     type: 'PUT',
